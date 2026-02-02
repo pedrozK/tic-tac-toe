@@ -6,29 +6,21 @@ const canvas = document.getElementById("myCanvas")
 const ctx = canvas.getContext("2d")
 // Funções auxiliares ============================================================
 
-// Essa Função desenha o tabuleiro
-function drawBoard(){
+// Funções para desenhar o tabuleiro
+function drawLineBoard(initX,initY,lastX, lastY){
     ctx.beginPath()
-    ctx.moveTo(175, 25)
-    ctx.lineTo(175, 475)
-    ctx.stroke()
-
-    ctx.beginPath()
-    ctx.moveTo(325, 25)
-    ctx.lineTo(325, 475)
-    ctx.stroke()
-
-    ctx.beginPath()
-    ctx.moveTo(25, 175)
-    ctx.lineTo(475, 175)
-    ctx.stroke()
-
-    ctx.beginPath()
-    ctx.moveTo(25, 325)
-    ctx.lineTo(475, 325)
+    ctx.moveTo(initX, initY)
+    ctx.lineTo(lastX, lastY)
     ctx.stroke()
 }
+function drawBoard(){
+    drawLineBoard(175, 25, 175, 4750)
+    drawLineBoard(325, 25, 325, 475)
+    drawLineBoard(25, 175, 475, 175)
+    drawLineBoard(25, 325, 475, 325)
+}
 
+// Funções para desenhar menu 
 function loadImage(path) {
     return new Promise((resolve, reject) => {
         let img = new Image();
