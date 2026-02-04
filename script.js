@@ -4,24 +4,27 @@ let flagStartGame = true
 let flagDrawMenu = true
 const canvas = document.getElementById("myCanvas")
 const ctx = canvas.getContext("2d")
-const rectButtonWidth = 150
+const rectButtonWidth = 250
 const rectButtonHeight = 75
-var rect = {
+var buttonLocalMode = {
     x: (canvas.width - rectButtonWidth)/2,
-    y: (canvas.height - rectButtonHeight)/2,
+    y: (canvas.height - rectButtonHeight)/2-40,
+    width: rectButtonWidth,
+    height: rectButtonHeight,
+}
+var buttonMachineMode = {
+    x: (canvas.width - rectButtonWidth)/2,
+    y: (canvas.height - rectButtonHeight)/2 + rectButtonHeight - 20,
+    width: rectButtonWidth,
+    height: rectButtonHeight,
+}
+var ButtonOnlineMode = {
+    x: (canvas.width - rectButtonWidth)/2,
+    y: (canvas.height - rectButtonHeight)/2 + 2*rectButtonHeight,
     width: rectButtonWidth,
     height: rectButtonHeight,
 }
 
-canvas.addEventListener('click', function(evt) {
-    var mousePos = getMousePos(canvas, evt)
-
-    if (isInside(mousePos, rect)) {
-        alert('clicked inside rect')
-    } else {
-        alert('clicked outside rect')
-    }
-}, false)
 // Funções auxiliares ============================================================
 
 // Funções para desenhar o tabuleiro
@@ -48,18 +51,18 @@ function loadImage(path) {
     });
 }
 
-function drawButton(rect) {
+function drawButton(rect, strMode) {
     ctx.beginPath()
     ctx.rect(rect.x, rect.y, rect.width, rect.height)
-    ctx.fillStyle = 'rgba(225,225,225,0.5)'
+    ctx.fillStyle = 'rgba(225, 225, 225, 0.81)'
     ctx.fill()
     ctx.lineWidth = 2
     ctx.strokeStyle = '#000000'
     ctx.stroke()
     ctx.closePath()
-    ctx.font = '40pt Kremlin Pro Web'
+    ctx.font = '30pt Arial'
     ctx.fillStyle = '#000000'
-    ctx.fillText('Start', rect.x + rect.width / 2, rect.y + 64)
+    ctx.fillText(strMode, rect.x + rect.width / 2, rect.y + rect.height/2)
 }
 
 async function drawMenu(){
@@ -73,7 +76,9 @@ async function drawMenu(){
     ctx.textBaseline = 'middle'
     ctx.fillText('Jogo da Velha', canvas.width / 2, 100)
     
-    drawButton(rect)
+    drawButton(buttonLocalMode, "Local Vs")
+    drawButton(buttonMachineMode, "Machine Vs")
+    drawButton(ButtonOnlineMode, "Online Vs")
 }
 // Para verificar se clicou nos botôes do jogo(menu)
 function isInside(pos, rect) {
@@ -98,3 +103,13 @@ function getMousePos(canvas, event) {
 //     drawMenu()
 // }
 drawMenu()
+
+canvas.addEventListener('click', function(evt) {
+    var mousePos = getMousePos(canvas, evt)
+
+    if (isInside(mousePos, buttonLocalMode)) {
+        alert('clicked inside rect')
+    } else {
+        alert('clicked outside rect')
+    }
+}, false)
